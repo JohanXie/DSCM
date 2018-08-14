@@ -26,6 +26,10 @@ public partial class Index : System.Web.UI.Page
                     AdminPlaceHolder2.Visible = true;
                     AdminPlaceHolder3.Visible = true;
                 }
+                else if (RoleGUID == "f71786b4-1d45-4191-af29-04a6bb43bb58")//为老师
+                {
+                    AdminPlaceHolder2.Visible = true;
+                }
             }
             
         }

@@ -16,27 +16,12 @@
 
     <div class="page-container">
 
-        <div class="text-c">
-             <span class="select-box inline">
-		        <select name="" class="select">
-			        <option value="0">全部分类</option>
-			        <option value="1">分类一</option>
-			        <option value="2">分类二</option>
-		        </select>
-		    </span>日期范围：
-		    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
-		    -
-		    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-		    <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name="">
-		    <button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
-	   </div>
-
        <div class="cl pd-5 bg-1 bk-gray mt-20"> 
            <span class="l">
                <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
                    <i class="Hui-iconfont">&#xe6e2;</i> 批量删除
                </a>
-               <a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')" class="btn btn-primary radius">
+               <a href="javascript:;"  onclick="user_add('添加用户','User_Add.aspx','','380')" class="btn btn-primary radius">
                    <i class="Hui-iconfont">&#xe600;</i> 添加用户
                </a>
                  <a href="javascript:;" class="btn btn-secondary radius">
@@ -90,7 +75,7 @@
                             <a style="text-decoration:none" class="ml-5" onClick="change_password('修改密码','change-password.html','10001','600','270')" href="javascript:;" title="修改密码">
                                 <i class="Hui-iconfont">&#xe63f;</i>
                             </a> 
-                            <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none">
+                            <a title="删除" href="javascript:;" @click="Delete(item.GUID)" class="ml-5" style="text-decoration:none">
                                 <i class="Hui-iconfont">&#xe6e2;</i>
                             </a>
 				        </td>

@@ -2,6 +2,11 @@
     el: '.form-horizontal',
     data: {
         roleList: [],//权限数据
+        classItems: {},
+
+        gradeSelected: '-1',
+        classSelected: '-1',
+        has: false,//判断是否显示sub
     },
 
     created: function () {
@@ -19,11 +24,31 @@
         })
     },
 
+    watch: {
+        gradeSelected: function () {
+            var that = this;
+            if (this.gradeSelected != "-1") {
+                this.has = true;
+                $.ajax({
+                    type: "get",
+                    url: "../CL/CL_WebService.asmx/InitClass",
+                    data: { Grade: this.gradeSelected },
+                    success: function (str) {
+                        var s = $(str).find("string").text();
+                        that.classItems = eval('(' + s + ')');
+                    }
+                });
+            }
+        },
+    },
+
     methods: {
 
         addUser: function () {
 
             var a;
+            var that = this;
+      
             ajax1 = $.ajax({
                 type: "post",
                 url: "Users_WebService.asmx/checkUser",
@@ -52,12 +77,13 @@
                         {
                             TeacherName: $("#userName").val(),
                             Password: $("#password").val(),
+                            NowTeachClass: that.classSelected,
+                            IsHeadTeacher: $("input[name='HeadTeacher']:checked").val(),
                             RoleGUID: $("input[name='Roles']:checked").val(),//*同一组的radio选中的value值
            
                         },
                         success: function (str) {
-                       
-                       
+                          
                         },
                         error: function (msg) {
                             console.log(msg);

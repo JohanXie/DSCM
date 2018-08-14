@@ -13,7 +13,7 @@ public partial class backend : System.Web.UI.MasterPage
         {
             if (Session["RoleGUID"] == null  )
             {
-                Util.ShowMessage("用户登录超时，请重新登录！", "/Login.aspx");
+                Util.ShowMessage("用户登录超时，请重新登录！", "/CM/Login.aspx");
             }
          
         }

@@ -56,17 +56,19 @@ public class Users_WebService : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public string addUser(string TeacherName, string Password, string RoleGUID)
+    public string addUser(string TeacherName, string Password, string NowTeachClass, string IsHeadTeacher, string RoleGUID)
     {
         string strGUID = Util.generateGUID();
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder("Insert into Teachers(GUID,TeacherName,Password,RoleGUID)");
-            sb.Append("Values (@GUID,@TeacherName,@Password,@RoleGUID)");
+            StringBuilder sb = new StringBuilder("Insert into Teachers(GUID,TeacherName,Password,NowTeachClass,IsHeadTeacher,RoleGUID)");
+            sb.Append("Values (@GUID,@TeacherName,@Password,@NowTeachClass,@IsHeadTeacher,@RoleGUID)");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@GUID", strGUID);
             cmd.Parameters.AddWithValue("@TeacherName", TeacherName);
             cmd.Parameters.AddWithValue("@Password", Util.GetHash(Password.Trim()));
+            cmd.Parameters.AddWithValue("@NowTeachClass", NowTeachClass);
+            cmd.Parameters.AddWithValue("@IsHeadTeacher", IsHeadTeacher);
             cmd.Parameters.AddWithValue("@RoleGUID", RoleGUID);
             conn.Open();
             cmd.ExecuteNonQuery();
@@ -75,6 +77,25 @@ public class Users_WebService : System.Web.Services.WebService
 
         }
         return "Success";
+    }
+
+    //删
+    [WebMethod(EnableSession = true)]
+    public string DelUser(string GUID)
+    {
+
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder("delete from Teachers where GUID = @GUID");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", GUID);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+        }
+        return "Success";
+
     }
 
     //改
