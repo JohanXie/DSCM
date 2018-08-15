@@ -188,6 +188,22 @@ on a.RoleGUID = b.GUID order by ID ASC");
         }
     }
 
+    [WebMethod(EnableSession = true)]
+    public string getUserInfo() {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder(@"select * from Teachers where GUID = @TeacherGUID");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@TeacherGUID", Session["TeacherGUID"].ToString());
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            conn.Close();
+            return Util.Dtb2Json(ds.Tables[0]);
+        }
+    }
+
 
 
     //检查用户是否唯一
