@@ -11,11 +11,20 @@ public partial class backend : System.Web.UI.MasterPage
     {
         if (!IsPostBack)
         {
-            if (Session["RoleGUID"] == null  )
+
+            if (Session["RoleGUID"] == null)
             {
                 Util.ShowMessage("用户登录超时，请重新登录！", "/CM/Login.aspx");
             }
-         
+            else {
+                if (Session["RoleGUID"].ToString() == "f71786b4-1d45-4191-af29-04a6bb43bb58")
+                {
+                    IsHeadTeacher.Text = Session["IsHeadTeacher"].ToString();
+                }
+            }
+
+        
+          
         }
     }
 }

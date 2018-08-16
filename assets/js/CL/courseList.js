@@ -13,6 +13,11 @@
     },
 
     created: function () {
+        if ($("#IsHeadTeacher").text() == "True") {
+            $("#headTeacherReport").show();
+        } else {
+            $("#headTeacherReport").hide();
+        }
         var that = this;
         $.ajax({
             type: "get",

@@ -18,7 +18,9 @@
         <div class="cl pd-5 bg-1 bk-gray mt-20"> 
             <span class="l">
                 <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
-                <a class="btn btn-primary radius" onclick="picture_add('添加图片','picture-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加图片</a>
+                <a class="btn btn-primary radius" id="headTeacherReport" :href="['ClassStudentsInCourse.aspx']">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出班级选课表
+                </a>
                  <a href="javascript:;" class="btn btn-secondary radius">
                      <i class="Hui-iconfont">&#xe645;</i><span v-show="keepShow" @click="chooseExcel()">&nbsp;选择Excel</span> 
                      <span v-show="!keepShow" @click="importStu()">&nbsp;导入课程</span>

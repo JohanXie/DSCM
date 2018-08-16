@@ -54,8 +54,8 @@
                                        {{item.StudentName}}
                                     </span> 
 					            </div>
-					            <a href="#" style="cursor:pointer" class="delUser" @click="Delete(item.GUID1)">
-                                     <i class="Hui-iconfont" >&#xe6e2;</i>
+					            <a href="#" style="cursor:pointer;" class="delUser" @click="Delete(item.GUID1)">
+                                     <i class="Hui-iconfont" style="position:absolute;top:140px;">&#xe6e2;</i>
 					            </a>
 				            </div>
 			            </li>

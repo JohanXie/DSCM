@@ -178,8 +178,13 @@ public class CL_WebService : System.Web.Services.WebService
     {
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder(@"select * from Courses");
+            StringBuilder sb = new StringBuilder(@"select * from Courses ");
+            if (Session["RoleGUID"].ToString() == "f71786b4-1d45-4191-af29-04a6bb43bb58") //老师
+            {
+                sb.Append("where CoursesTeachers = @TeacherName");
+            }
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@TeacherName", "大豪");
             conn.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -227,7 +232,7 @@ public class CL_WebService : System.Web.Services.WebService
     {
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder(@" SELECT a.*,b.GUID FROM Students  as a
+            StringBuilder sb = new StringBuilder(@"SELECT a.*,b.GUID FROM Students  as a
  left join 
  Course_Students as b
  on a.GUID = b.StudentsID 
@@ -258,7 +263,7 @@ Course_Students as b
 on a.GUID = b.StudentsID
 join Courses as c
 on b.CourseGUID = c.GUID
-WHERE c.GUID = @CourseGUID ");
+WHERE c.GUID = @CourseGUID");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@CourseGUID", CourseGUID);
             conn.Open();
@@ -266,7 +271,6 @@ WHERE c.GUID = @CourseGUID ");
             da.Fill(ds);
             conn.Close();
         }
-
         return  Util.Dtb2Json(ds.Tables[0]);
     }
 

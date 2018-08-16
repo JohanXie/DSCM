@@ -48,6 +48,7 @@
         <asp:Label ID="RoleGUID" runat="server" Text="Label" Visible="false"></asp:Label>
          <asp:Label ID="TeacherName" runat="server" Text="Label" Visible="false"></asp:Label>
           <asp:Label ID="Grade" runat="server" Text="Label" Visible="false"></asp:Label>
+         <asp:Label ID="IsHeadTeacher" runat="server" Text="Label" Visible="false"></asp:Label>
 
             <div class ="title">
             <div class="row">

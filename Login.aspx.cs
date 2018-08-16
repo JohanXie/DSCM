@@ -56,6 +56,7 @@ public partial class Login : System.Web.UI.Page
                 System.Web.HttpContext.Current.Session["TeacherGUID"] = TeacherGUID.Text;
                 System.Web.HttpContext.Current.Session["UserName"] = TeacherName.Text;
                 System.Web.HttpContext.Current.Session["RoleGUID"] = RoleGUID.Text;
+                System.Web.HttpContext.Current.Session["IsHeadTeacher"] = IsHeadTeacher.Text;
                 if (RoleGUID.Text == "60843daa-c3b8-4e38-b221-e7549bfea258") {
                     System.Web.HttpContext.Current.Session["RoleName"] = "管理员";
                 }
@@ -90,6 +91,7 @@ public partial class Login : System.Web.UI.Page
                 TeacherGUID.Text = rd["GUID"].ToString();
                 TeacherName.Text = rd["TeacherName"].ToString();
                 RoleGUID.Text = rd["RoleGUID"].ToString();
+                IsHeadTeacher.Text = rd["IsHeadTeacher"].ToString();
                 flag = 1;
             }
             cmd.Dispose();
