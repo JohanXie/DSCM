@@ -61,8 +61,8 @@ public class Users_WebService : System.Web.Services.WebService
         string strGUID = Util.generateGUID();
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder("Insert into Teachers(GUID,TeacherName,Password,NowTeachClass,IsHeadTeacher,RoleGUID)");
-            sb.Append("Values (@GUID,@TeacherName,@Password,@NowTeachClass,@IsHeadTeacher,@RoleGUID)");
+            StringBuilder sb = new StringBuilder("Insert into Teachers(GUID,TeacherName,Password,NowTeachClass,IsHeadTeacher,RoleGUID,Valid)");
+            sb.Append("Values (@GUID,@TeacherName,@Password,@NowTeachClass,@IsHeadTeacher,@RoleGUID,@Valid)");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@GUID", strGUID);
             cmd.Parameters.AddWithValue("@TeacherName", TeacherName);
@@ -70,6 +70,7 @@ public class Users_WebService : System.Web.Services.WebService
             cmd.Parameters.AddWithValue("@NowTeachClass", NowTeachClass);
             cmd.Parameters.AddWithValue("@IsHeadTeacher", IsHeadTeacher);
             cmd.Parameters.AddWithValue("@RoleGUID", RoleGUID);
+            cmd.Parameters.AddWithValue("@Valid", 1);
             conn.Open();
             cmd.ExecuteNonQuery();
             cmd.Dispose();
@@ -151,13 +152,45 @@ public class Users_WebService : System.Web.Services.WebService
         return i;
     }
 
+    [WebMethod(EnableSession = true)]
+    public int forbiddenUser(string guid)
+    {
+        int i = 0;
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder("update Teachers set Valid=0 where GUID = @GUID");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", guid);
+            conn.Open();
+            i = cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+        return i;
+    }
+
+    [WebMethod(EnableSession = true)]
+    public int ensureUser(string guid)
+    {
+        int i = 0;
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder("update Teachers set Valid=1 where GUID = @GUID");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", guid);
+            conn.Open();
+            i = cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+        return i;
+    }
+
     //查
     [WebMethod(EnableSession = true)]
     public string InitRoles()
     {
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder(@"select * from Roles");
+            StringBuilder sb = new StringBuilder(@"select * from Roles where Valid = 1");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             conn.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);

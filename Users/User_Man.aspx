@@ -64,10 +64,16 @@
 				        <td>{{item.RoleName}}</td>
 				        <td></td>
 				        <td class="text-l">{{item.Class}}</td>
-				        <td class="td-status"><span class="label label-success radius">已启用</span></td>
+				        <td class="td-status">
+                            <span class="label label-success radius" v-if="item.Valid">已启用</span>
+                            <span class="label label-default radius" v-if="!item.Valid">已禁用</span>
+				        </td>
 				        <td class="td-manage">
-                            <a style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" title="停用">
+                            <a style="text-decoration:none" @click="admin_stop($event,item.GUID)" href="javascript:;" title="停用"  v-if="item.Valid">
                                 <i class="Hui-iconfont">&#xe631;</i>
+                            </a>
+                            <a @click="admin_start($event,item.GUID)" href="javascript:;" title="启用" style="text-decoration:none" v-if="!item.Valid">
+                                <i class="Hui-iconfont">&#xe615;</i>
                             </a>
                             <a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" class="ml-5" style="text-decoration:none">
                                 <i class="Hui-iconfont">&#xe6df;</i>

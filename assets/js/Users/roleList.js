@@ -215,8 +215,8 @@ var roleList = new Vue({
                 url: "Users_WebService.asmx/forbiddenRoles",
                 data: { "ids": ids.toString() },
                 success: function (str) {
-                    alert("已成功删除权限");
-                    window.location.reload();
+                    //layer.msg('已删除权限!', { icon: 6, time: 1000 });
+                    location.reload();
                 }
             });
         }

@@ -89,7 +89,17 @@
                  <dt><i class="Hui-iconfont">&#xe692;</i> 评价管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                  <dd>
                      <ul>
-                          <li><a data-href="EM/StudentCourseEvaluation.aspx" data-title="学生课程评价" href="javascript:void(0)">学生课程评价</a></li>
+                          <li>
+                              <a data-href="EM/StudentCourseEvaluation.aspx" data-title="学生课程评价" href="javascript:void(0)">
+                                  学生课程评价
+                              </a>
+                          </li>
+
+                         <li>
+                              <a data-href="EM/StudentScoreList.aspx" data-title="学生成绩表" href="javascript:void(0)">
+                                  学生成绩表
+                              </a>
+                          </li>
                      </ul>
                  </dd>
             </dl>
