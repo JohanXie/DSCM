@@ -10,6 +10,7 @@ public partial class Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
     }
 
     protected void Loging_Click(object sender, EventArgs e)
@@ -64,6 +65,10 @@ public partial class Login : System.Web.UI.Page
                 {
                     System.Web.HttpContext.Current.Session["RoleName"] = "老师";
                 }
+                if (IsHeadTeacher.Text == "True")
+                {
+                    System.Web.HttpContext.Current.Session["Class"] = Class.Text;
+                }
                 Response.Redirect(Server.HtmlEncode("Index.aspx"));
 
             }
@@ -92,6 +97,7 @@ public partial class Login : System.Web.UI.Page
                 TeacherName.Text = rd["TeacherName"].ToString();
                 RoleGUID.Text = rd["RoleGUID"].ToString();
                 IsHeadTeacher.Text = rd["IsHeadTeacher"].ToString();
+                Class.Text = rd["NowTeachClass"].ToString();
                 flag = 1;
             }
             cmd.Dispose();

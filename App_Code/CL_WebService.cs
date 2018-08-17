@@ -274,4 +274,28 @@ WHERE c.GUID = @CourseGUID");
         return  Util.Dtb2Json(ds.Tables[0]);
     }
 
+    [WebMethod(EnableSession = true)]
+    public string exportClassStudentsExcel() {
+        DataSet ds = new DataSet();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            //定义查询的SQL语句
+            StringBuilder sb = new StringBuilder(@"select a.*,c.CoursesTeachers,c.CourseName,c.CourseType,c.CourseWeekDate,c.CourseSite
+from Students as a
+left join
+Course_Students as b
+on a.GUID = b.StudentsID
+join Courses as c
+on b.CourseGUID = c.GUID
+WHERE  a.PoliticClass = @PoliticClass");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@PoliticClass", Session["Class"].ToString());
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            conn.Close();
+        }
+        return Util.Dtb2Json(ds.Tables[0]);
+    }
+
 }
