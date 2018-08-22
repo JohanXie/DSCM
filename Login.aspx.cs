@@ -65,6 +65,10 @@ public partial class Login : System.Web.UI.Page
                 {
                     System.Web.HttpContext.Current.Session["RoleName"] = "老师";
                 }
+                if (RoleGUID.Text == "4baf0678-0d12-4bef-bacd-ba949e06f388")
+                {
+                    System.Web.HttpContext.Current.Session["RoleName"] = "级主任";
+                }
                 if (IsHeadTeacher.Text == "True")
                 {
                     System.Web.HttpContext.Current.Session["Class"] = Class.Text;

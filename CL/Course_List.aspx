@@ -7,10 +7,7 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课程管理 <span class="c-gray en">&gt;</span> 课程列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="page-container">
 
-         <div class="text-c"> 日期范围：
-		    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
-		    -
-		    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
+         <div class="text-c"> 
 		    <input type="text" name="" id="" placeholder=" 输入课程名称、开课年级、指导老师" style="width:250px" class="input-text">
 		    <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜课程</button>
 	    </div>
@@ -20,6 +17,9 @@
                 <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
                 <a class="btn btn-primary radius" id="headTeacherReport" :href="['ClassStudentsInCourse.aspx']">
                     <i class="Hui-iconfont">&#xe644;</i> 导出班级选课表
+                </a>
+                  <a class="btn btn-success radius" id="gradeDirectorReport" :href="['GradeStudentsInCourse.aspx']">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出年级选课表
                 </a>
                  <a href="javascript:;" class="btn btn-secondary radius">
                      <i class="Hui-iconfont">&#xe645;</i><span v-show="keepShow" @click="chooseExcel()">&nbsp;选择Excel</span> 

@@ -169,7 +169,7 @@ var roleList = new Vue({
 
                     },
                     success: function (str) {
-                        alert("修改成功");
+                        alert("添加成功");
                         location.reload();//刷新页面
                     },
                     error: function (msg) {

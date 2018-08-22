@@ -30,6 +30,10 @@ public partial class Index : System.Web.UI.Page
                 {
                     AdminPlaceHolder2.Visible = true;
                 }
+                else if (RoleGUID == "4baf0678-0d12-4bef-bacd-ba949e06f388")//为级主任
+                {
+                    AdminPlaceHolder2.Visible = true;
+                }
             }
             
         }

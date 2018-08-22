@@ -176,15 +176,27 @@ public class CL_WebService : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public string InitCourses()
     {
+        string teacherGUID = "f71786b4-1d45-4191-af29-04a6bb43bb58";
+        string gradeDirector = "4baf0678-0d12-4bef-bacd-ba949e06f388";
         using (SqlConnection conn = new DB().GetConnection())
         {
             StringBuilder sb = new StringBuilder(@"select * from Courses ");
-            if (Session["RoleGUID"].ToString() == "f71786b4-1d45-4191-af29-04a6bb43bb58") //老师
+            if (Session["RoleGUID"].ToString() == teacherGUID) //老师
             {
                 sb.Append("where CoursesTeachers = @TeacherName");
+            } else if (Session["RoleGUID"].ToString() == gradeDirector)//级主任
+            {
+                sb.Append("where CourseGender like  '%'+ @Grade + '%'");
             }
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
-            cmd.Parameters.AddWithValue("@TeacherName", "大豪");
+            if (Session["RoleGUID"].ToString() == teacherGUID) //老师
+            {
+                cmd.Parameters.AddWithValue("@TeacherName", Session["UserName"].ToString());
+            }
+            else if (Session["RoleGUID"].ToString() == gradeDirector)//级主任
+            {
+                cmd.Parameters.AddWithValue("@Grade", Session["Class"].ToString().Substring(0, 2));
+            }
             conn.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -290,6 +302,31 @@ on b.CourseGUID = c.GUID
 WHERE  a.PoliticClass = @PoliticClass");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@PoliticClass", Session["Class"].ToString());
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            conn.Close();
+        }
+        return Util.Dtb2Json(ds.Tables[0]);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string exportGradeStudentsExcel()
+    {
+        DataSet ds = new DataSet();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            //定义查询的SQL语句
+            StringBuilder sb = new StringBuilder(@"select a.*,c.CoursesTeachers,c.CourseName,c.CourseType,c.CourseWeekDate,c.CourseSite
+from Students as a
+left join
+Course_Students as b
+on a.GUID = b.StudentsID
+join Courses as c
+on b.CourseGUID = c.GUID
+WHERE  a.Grade = @Grade");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@Grade", Session["Class"].ToString().Substring(0, 2));
             conn.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);

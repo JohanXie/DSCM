@@ -38,7 +38,22 @@ public class EM_WebService : System.Web.Services.WebService
     public string addStudentsEvaluation(string evaluationData) {
        DataTable ds = Util.JsonToDataSet(evaluationData);
        DataRow[] dr = ds.Select();   //定义一个DataRow数组
-       for (int i = 0; i < dr.Length; i++)
+       string reportGUID = Guid.NewGuid().ToString();
+
+        using (SqlConnection conn = new DB().GetConnection()) {
+            StringBuilder sb = new StringBuilder("Insert into ScoreReport(GUID,GenerateUser,GenerateDate)");
+            sb.Append(" values (@GUID,@GenerateUser,@GenerateDate)");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", reportGUID);
+            cmd.Parameters.AddWithValue("@GenerateUser", Session["UserName"].ToString());
+            cmd.Parameters.AddWithValue("@GenerateDate", DateTime.Now);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+        }
+
+            for (int i = 0; i < dr.Length; i++)
        {
             string GUID = Guid.NewGuid().ToString();
             string StudentGUID = dr[i]["GUID"].ToString();
@@ -48,7 +63,7 @@ public class EM_WebService : System.Web.Services.WebService
             string BelongToTerm = "上学期";
             using (SqlConnection conn = new DB().GetConnection())
             {
-                string insertData = "insert into StudentCourseEvaluation (GUID,CourseGUID,StudentGUID,Grade,BelongToYear,BelongToTerm) values('" + GUID + "','" + CourseGUID + "','" + StudentGUID + "','" + Grade + "','" + BelongToYear + "','" + BelongToTerm +  "')";
+                string insertData = "insert into StudentCourseEvaluation (GUID,CourseGUID,StudentGUID,Grade,BelongToYear,BelongToTerm,ScoreReportGUID) values('" + GUID + "','" + CourseGUID + "','" + StudentGUID + "','" + Grade + "','" + BelongToYear + "','" + BelongToTerm + "','" + reportGUID + "')";
                 SqlCommand cmd = new SqlCommand(insertData, conn);
                 conn.Open();
                 try
@@ -63,7 +78,7 @@ public class EM_WebService : System.Web.Services.WebService
                 }
             }
 
-            }
+        }
 
 
             return "Success";
@@ -90,6 +105,11 @@ where b.CourseGUID =  @CourseGUID");
             conn.Close();
             return Util.Dtb2Json(ds.Tables[0]);
         }
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string getScoreReport( ) {
+        return "Success";
     }
 
  }
