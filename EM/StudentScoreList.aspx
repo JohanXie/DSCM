@@ -21,7 +21,14 @@
                       <template v-for="(item,index) of items" v-model="items"  v-clock>
 				            <tr class="text-c">
                                  <td>{{index+1}}</td>
-
+                                 <td>{{item.CourseName}}</td>
+                                 <td>{{item.BelongToYear}}</td>
+                                  <td>{{item.GenerateUser}}</td>
+                                  <td>
+                                      <a :href="['CourseScore.aspx?ID='+item.GUID]" class="Hui-iconfont" style="color:#44708e;cursor:pointer;font-size:16px">
+                                          &#xe695;
+                                      </a>
+                                  </td>
                              </tr>
                     </template>
                 </tbody>

@@ -39,45 +39,47 @@ public class EM_WebService : System.Web.Services.WebService
        DataTable ds = Util.JsonToDataSet(evaluationData);
        DataRow[] dr = ds.Select();   //定义一个DataRow数组
        string reportGUID = Guid.NewGuid().ToString();
+        string BelongToYear = "2018学年";
+        string BelongToTerm = "上学期";
+        string courseGUID = "";
+        DataTable dt = Util.GetEvaluationTableSchema();
 
         using (SqlConnection conn = new DB().GetConnection()) {
-            StringBuilder sb = new StringBuilder("Insert into ScoreReport(GUID,GenerateUser,GenerateDate)");
-            sb.Append(" values (@GUID,@GenerateUser,@GenerateDate)");
+            SqlBulkCopy bulkCopy = new SqlBulkCopy(conn);
+            bulkCopy.DestinationTableName = "StudentCourseEvaluation";
+            bulkCopy.BatchSize = dr.Length;
+            conn.Open();
+            for (int i = 0; i < dr.Length; i++)
+            {
+                DataRow dr1 = dt.NewRow();
+                dr1[1] = Guid.NewGuid();
+                dr1[2] = dr[i]["CourseGUID"].ToString();
+                dr1[3] = dr[i]["GUID"].ToString();
+                dr1[4] = dr[i]["Evaluation"].ToString();
+                dr1[5] = reportGUID;
+                dt.Rows.Add(dr1);
+                if (i == dr.Length - 1) {
+                    courseGUID = dr[i]["CourseGUID"].ToString();
+                }
+            }
+            if (dt != null && dt.Rows.Count != 0)
+            {
+                bulkCopy.WriteToServer(dt);
+            }
+
+
+            StringBuilder sb = new StringBuilder("Insert into ScoreReport(GUID,GenerateUser,GenerateDate,CourseGUID,BelongToTerm,BelongToYear)");
+            sb.Append(" values (@GUID,@GenerateUser,@GenerateDate,@CourseGUID,@BelongToTerm,@BelongToYear)");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@GUID", reportGUID);
             cmd.Parameters.AddWithValue("@GenerateUser", Session["UserName"].ToString());
             cmd.Parameters.AddWithValue("@GenerateDate", DateTime.Now);
-            conn.Open();
+            cmd.Parameters.AddWithValue("@CourseGUID", courseGUID);
+            cmd.Parameters.AddWithValue("@BelongToTerm", BelongToTerm);
+            cmd.Parameters.AddWithValue("@BelongToYear", BelongToYear);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
             conn.Close();
-        }
-
-            for (int i = 0; i < dr.Length; i++)
-       {
-            string GUID = Guid.NewGuid().ToString();
-            string StudentGUID = dr[i]["GUID"].ToString();
-            string CourseGUID = dr[i]["CourseGUID"].ToString();
-            string Grade = dr[i]["Evaluation"].ToString();
-            string BelongToYear = "2018学年";
-            string BelongToTerm = "上学期";
-            using (SqlConnection conn = new DB().GetConnection())
-            {
-                string insertData = "insert into StudentCourseEvaluation (GUID,CourseGUID,StudentGUID,Grade,BelongToYear,BelongToTerm,ScoreReportGUID) values('" + GUID + "','" + CourseGUID + "','" + StudentGUID + "','" + Grade + "','" + BelongToYear + "','" + BelongToTerm + "','" + reportGUID + "')";
-                SqlCommand cmd = new SqlCommand(insertData, conn);
-                conn.Open();
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-                catch (MembershipCreateUserException ex)       //捕捉异常
-                {
-                    HttpResponse Response = System.Web.HttpContext.Current.Response;
-                    Response.Write("<script>alert('导入内容:" + ex.Message + "')</script>");
-                }
-            }
-
         }
 
 
@@ -109,7 +111,20 @@ where b.CourseGUID =  @CourseGUID");
 
     [WebMethod(EnableSession = true)]
     public string getScoreReport( ) {
-        return "Success";
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder(@" select a.*,b.CourseName from
+ScoreReport  as a
+left join Courses as b
+on a.CourseGUID = b.GUID");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            conn.Close();
+            return Util.Dtb2Json(ds.Tables[0]);
+        }
     }
 
  }

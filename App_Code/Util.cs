@@ -147,7 +147,21 @@ public class Util
         return dt;
     }
 
-    public static DataSet ExecleDs(string filenameurl, string table)
+    public static DataTable GetEvaluationTableSchema()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.AddRange(new DataColumn[] {
+              new DataColumn("ID",typeof(int)),
+              new DataColumn("GUID",typeof(string)),
+              new DataColumn("CourseGUID",typeof(string)),
+              new DataColumn("StudentGUID",typeof(string)),
+              new DataColumn("Grade",typeof(string)),
+              new DataColumn("ScoreReportGUID",typeof(string)),
+         });
+        return dt;
+    }
+
+        public static DataSet ExecleDs(string filenameurl, string table)
     {
         string strConn = "Provider=Microsoft.Ace.OleDb.12.0;" + "data source=" + filenameurl + ";Extended Properties='Excel 12.0; HDR=YES; IMEX=1'";
         OleDbConnection conn = new OleDbConnection(strConn);
