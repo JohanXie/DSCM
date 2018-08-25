@@ -5,8 +5,12 @@
     data:{
         items: [],
         studentsEvaluation: [],
+        courseItems: [],
+        courseStudents: [],
 
         evaluateSelect: null,
+        yearSelected: '-1',
+        termSelected: '-1',
     },
 
     created: function () {
@@ -18,7 +22,6 @@
                 url: "EM_WebService.asmx/getCourseStudents",
                 data: { CourseGUID: GetQueryString("ID") },
                 success: function (str) {
-                    var ss = [];
                     a = $(str).find("string").text();
                     var json = eval('(' + a + ')');
                     that.items = json;
@@ -31,7 +34,51 @@
     },
 
     watch: {
-       
+        yearSelected: function () {
+            var that = this;
+            if (this.yearSelected == "2018学年") {
+                $.ajax({
+                    type: "get",
+                    url: "EM_WebService.asmx/getCourseByYear",
+                    data: { BelongToYear: this.yearSelected },
+                    success: function (str) {
+                        a = $(str).find("string").text();
+                        var json = eval('(' + a + ')');
+                        that.courseItems = json;
+                        //this.setSlist(this.choosedCourse);
+                    },
+                    error: function () {
+
+                    }
+                });
+               
+            }
+
+        },
+
+        termSelected: function () {
+            var json = this.courseItems;
+            var ss = [];
+            if (this.termSelected == "上学期") {
+                for (var i in json) {
+                    if (json[i].BelongtoTerm == "上学期") {
+                        ss.push(json[i]);
+                   }
+                }
+            }
+
+            if (this.termSelected == "下学期") {
+                for (var i in json) {
+                    if (json[i].BelongtoTerm == "下学期") {
+                        ss.push(json[i]);
+                    }
+                }
+            }
+
+            this.setSlist(ss); 
+        }
+
+
     },
 
 
@@ -62,11 +109,35 @@
             arr.Evaluation = event.target.value;
             this.studentsEvaluation.push(arr);
            
-        }
+        },
+
+        // 获取需要渲染到页面中的数据
+        setSlist(arr) {
+            this.courseItems = JSON.parse(JSON.stringify(arr));
+        },
 
     }
 
 })
+
+$("select#course").change(function () {
+  
+    $.ajax({
+        type: "post",
+        url: "EM_WebService.asmx/getCourseStudents",
+        data: { CourseGUID: $(this).val() },
+        success: function (str) {
+            a = $(str).find("string").text();
+            var json = eval('(' + a + ')');
+            studentCourseEvaluationVue.courseStudents = json;
+        },
+        error: function () {
+
+        }
+    });
+       
+   
+});
 
 function saveTable() {
     debugger;

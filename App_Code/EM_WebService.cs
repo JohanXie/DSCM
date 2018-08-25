@@ -127,4 +127,50 @@ on a.CourseGUID = b.GUID");
         }
     }
 
- }
+    [WebMethod(EnableSession = true)]
+    public string exportCourseScoreExcel(string ScoreReportGUID)
+    {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder(@" select a.Grade,
+b.PoliticClass,b.StudentName,b.SchoolNum,
+c.CourseName
+from StudentCourseEvaluation as a
+left join
+Students as b
+on a.StudentGUID = b.GUID
+left join
+Courses as c
+on a.CourseGUID = c.GUID
+where a.ScoreReportGUID = @ScoreReportGUID");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@ScoreReportGUID", ScoreReportGUID);
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            conn.Close();
+            return Util.Dtb2Json(ds.Tables[0]);
+        }
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string getCourseByYear(string BelongToYear)
+    {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder(@"select GUID,CourseName,BelongtoYear,BelongtoTerm from Courses where BelongToYear = @BelongToYear");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@BelongToYear", BelongToYear);
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            conn.Close();
+            return Util.Dtb2Json(ds.Tables[0]);
+
+        }
+    }
+    
+
+}

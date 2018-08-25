@@ -19,19 +19,25 @@
                       <tr>
                           <td colspan="2">所属学期</td>
                           <td colspan="10">
-                              <select>
-                                  <option>选择学年</option>
+                              <select v-model="yearSelected">
+                                  <option value="-1">选择学年</option>
+                                   <option value="2018学年">2018学年</option>
                               </select>
-                               <select>
-                                  <option>选择学期</option>
+                               <select v-model="termSelected">
+                                  <option value="-1">选择学期</option>
+                                  <option value="上学期">上学期</option>
+                                  <option value="下学期">下学期</option>
                               </select>
                           </td>
                       </tr>
                       <tr>
                           <td colspan="2">课程名</td>
                           <td colspan="10">
-                               <select>
-                                  <option>选择课程</option>
+                               <select id="course">
+                                  <option value="-1">选择课程</option>
+                                  <option v-for="(item,index) of courseItems" :value="item.GUID">
+                                      {{item.CourseName}}
+                                  </option>
                               </select>
                           </td>
                       </tr>
@@ -48,7 +54,7 @@
                                    </thead>
 
                                    <tbody id="td">
-                                      <template v-for="(item,index) of items" v-model="items"  v-clock>
+                                      <template v-for="(item,index) of  courseStudents" v-model="courseStudents"  v-clock>
 				                            <tr class="text-c">
                                                 <td>{{item.PoliticClass}}</td>
                                                  <td>{{item.StudentName}}</td>
