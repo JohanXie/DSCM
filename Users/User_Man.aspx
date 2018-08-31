@@ -21,16 +21,21 @@
                <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
                    <i class="Hui-iconfont">&#xe6e2;</i> 批量删除
                </a>
-               <a href="javascript:;"  onclick="user_add('添加用户','User_Add.aspx','','380')" class="btn btn-primary radius">
-                   <i class="Hui-iconfont">&#xe600;</i> 添加用户
+               <a href="javascript:;"   class="btn btn-primary radius">
+                   <i class="Hui-iconfont">&#xe600;</i> <span v-show="keepTeacherShow" @click="chooseTeacherExcel()">添加教师</span> 
+                    <span v-show="!keepTeacherShow" @click="importTeacher()">导入教师</span>
                </a>
                  <a href="javascript:;" class="btn btn-secondary radius">
-                     <i class="Hui-iconfont">&#xe645;</i><span v-show="keepShow" @click="chooseExcel()">选择Excel</span> 
+                     <i class="Hui-iconfont">&#xe645;</i><span v-show="keepShow" @click="chooseExcel()">添加学生</span> 
                      <span v-show="!keepShow" @click="importStu()">导入学生</span>
                  </a> 
                 <asp:FileUpload ID="FileUpload1" runat="server" Width="305px" style="display:none"/>
                     &nbsp; &nbsp;
                  <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="导入SQL" style="display:none"/>
+
+                <asp:FileUpload ID="FileUpload2" runat="server" Width="305px" style="display:none"/>
+                    &nbsp; &nbsp;
+                 <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="导入SQL" style="display:none"/>
            </span> 
            <span class="r">共有数据：<strong>88</strong> 条</span> 
        </div>

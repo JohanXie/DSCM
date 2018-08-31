@@ -6,6 +6,7 @@
         teachers: [],
         items: [],//显示的数据
 
+        keepTeacherShow: true,
         keepShow: true,
         userValid: true,
     },
@@ -27,6 +28,12 @@
 
     methods: {
 
+        chooseTeacherExcel: function () {
+            $("#ContentPlaceHolder1_FileUpload2").click();
+            this.keepTeacherShow = false;
+
+        },
+
         chooseExcel: function () {
             $("#ContentPlaceHolder1_FileUpload1").click();
             this.keepShow = false;
@@ -35,6 +42,10 @@
 
         importStu: function () {
             $("#ContentPlaceHolder1_Button1").click();
+        },
+
+        importTeacher: function () {
+            $("#ContentPlaceHolder1_Button2").click();
         },
 
         Delete: function (guid) {

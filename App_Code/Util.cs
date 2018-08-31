@@ -147,6 +147,28 @@ public class Util
         return dt;
     }
 
+    public static DataTable GetTeacherTableSchema()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.AddRange(new DataColumn[] {
+              new DataColumn("ID",typeof(int)),
+              new DataColumn("GUID",typeof(string)),
+              new DataColumn("TeacherName",typeof(string)),
+              new DataColumn("Gender",typeof(Boolean)),
+              new DataColumn("NowTeachMajor",typeof(string)),
+              new DataColumn("NowTeacherGrade",typeof(string)),//5
+              new DataColumn("RemarkOne",typeof(string)),
+              new DataColumn("RemarkTwo",typeof(string)),
+              new DataColumn("RemarkThree",typeof(string)),
+              new DataColumn("Password",typeof(string)),//9
+              new DataColumn("RoleGUID",typeof(string)),
+              new DataColumn("Valid",typeof(Boolean)),
+              new DataColumn("IsHeadTeacher",typeof(Boolean)),
+              new DataColumn("NowTeachClass",typeof(string)),//13
+         });
+        return dt;
+    }
+
     public static DataTable GetEvaluationTableSchema()
     {
         DataTable dt = new DataTable();

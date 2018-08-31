@@ -36,6 +36,7 @@
 </head>
 <body>
     <asp:Label ID="IsHeadTeacher" runat="server" Text="Label" style="display:none"></asp:Label>
+    <asp:Label ID="RoleName" runat="server" Text="Label" style="display:none"></asp:Label>
     <form id="form1" runat="server">
   
 

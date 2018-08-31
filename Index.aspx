@@ -75,7 +75,7 @@
 
           <asp:PlaceHolder ID="AdminPlaceHolder3" runat="server" Visible="false">
             <dl id="menu-member">
-			    <dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			    <dt><i class="Hui-iconfont">&#xe62b;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			    <dd>
 				    <ul>
                        <li><a data-href="Users/Role_List.aspx" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
@@ -84,6 +84,15 @@
                  </dd>
            </dl>
           </asp:PlaceHolder>
+
+            <dl id="menu-user">
+			    <dt><i class="Hui-iconfont">&#xe62c;</i> 个人信息<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			    <dd>
+				    <ul>
+                       <li><a data-href="Users/Password_Edit.aspx" data-title="密码修改" href="javascript:void(0)">密码修改</a></li>
+                    </ul>
+                 </dd>
+           </dl>
 
              <dl id="menu-courseevaluation">
                  <dt><i class="Hui-iconfont">&#xe692;</i> 评价管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>

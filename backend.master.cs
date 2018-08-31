@@ -19,6 +19,7 @@ public partial class backend : System.Web.UI.MasterPage
                 if (Session["RoleGUID"].ToString() == "f71786b4-1d45-4191-af29-04a6bb43bb58"  || Session["RoleGUID"].ToString() == "4baf0678-0d12-4bef-bacd-ba949e06f388")//老师，级主任
                 {
                     IsHeadTeacher.Text = Session["IsHeadTeacher"].ToString();
+                    RoleName.Text = Session["RoleName"].ToString();
                 }
             }
 

@@ -18,6 +18,14 @@
         } else {
             $("#headTeacherReport").hide();
         }
+
+        if ($("#RoleName").text() == "级主任") {
+            $("#gradeDirectorReport").show();
+        } else {
+            $("#gradeDirectorReport").hide();
+        }
+
+       
         var that = this;
         $.ajax({
             type: "get",
