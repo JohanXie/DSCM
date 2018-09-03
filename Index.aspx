@@ -80,6 +80,7 @@
 				    <ul>
                        <li><a data-href="Users/Role_List.aspx" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
                        <li><a data-href="Users/User_Man.aspx" data-title="用户列表" href="javascript:void(0)">用户列表</a></li>
+                         <li><a data-href="Users/User_Add.aspx" data-title="新增用户" href="javascript:void(0)">新增用户</a></li>
                     </ul>
                  </dd>
            </dl>

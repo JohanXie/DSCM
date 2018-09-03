@@ -53,7 +53,9 @@ public partial class Users_User_Man : System.Web.UI.Page
 
                     foreach (string str in dr[i]["出生日期"].ToString().Split(' ')[0].ToString().Split('/'))
                     {
+                       
                         string time = str;
+                        Util.ShowMessage(str,"");
                         if (int.Parse(time) < 10)
                         {
                             time = "0" + Convert.ToString(time);
@@ -140,6 +142,7 @@ public partial class Users_User_Man : System.Web.UI.Page
                     {
                         dr1[10] = "4baf0678-0d12-4bef-bacd-ba949e06f388";
                     }
+                    dr1[11] = 1;
                     dt.Rows.Add(dr1);
                 }
                 if (dt != null && dt.Rows.Count != 0)

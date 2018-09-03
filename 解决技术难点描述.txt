@@ -1,7 +1,14 @@
 1.两个异步请求配合发送数据（userAdd.js）
 2.模态框关闭后改变弹出模态框样式（courseAdd.js）
 3.c#批量快速插入数据库（CL_WebService.cs）
-4.C# 参数化SQL语句中的like和in(https://blog.csdn.net/changhong009/article/details/7396005)
+4.C# 参数化SQL语句中的like和in
+(https://blog.csdn.net/changhong009/article/details/7396005)
 并获取两表是否有相同参数列
 5.js解决url中文传值乱码（courseUsersShow.js）
-6.未在本地计算机上注册“Microsoft.Ace.OleDb.12.0”提供程序。（https://blog.csdn.net/yyzzhc999/article/details/79367114）
+6.未在本地计算机上注册“Microsoft.Ace.OleDb.12.0”提供程序。
+（https://blog.csdn.net/yyzzhc999/article/details/79367114）
+7.使用Vue框架设置Select，Radio选中方法（userAdd.js）
+8.使用js把Object转为Json，Js使用ajax传送Json数据，
+  c#把Json转为DataTable，C#关于json数据的批量插入
+  StudentCourseEvaluation.aspx
+9.使用框架反馈信息（userAdd.js）

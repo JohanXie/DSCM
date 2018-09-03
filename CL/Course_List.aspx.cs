@@ -64,8 +64,7 @@ public partial class CL_Course_List : System.Web.UI.Page
                     conn.Open();
                     int count = Convert.ToInt32(cmd.ExecuteScalar());
                
-                    if (count < 1)
-                    {
+                   
                         cmd.CommandText = "insert into Courses (GUID,CourseName,CourseFirstStartDate,CourseWeekDate,CourseSite,CourseLimitNum,CourseStatus,CourseType,CoursesTeachers,CourseGender,CourseNote) values('" + GUID + "','"+ CourseName + "','" + CourseFirstStartDate + "','" + CourseWeekDate + "','" + CourseSite + "','" + CourseLimitNum + "','" + CourseStatus + "','" + CourseType + "','" + CoursesTeachers + "','" + CourseGender + "','" + CourseNote + "')";
                         try
                         {
@@ -75,13 +74,7 @@ public partial class CL_Course_List : System.Web.UI.Page
                         {
                             Response.Write("<script>alert('导入内容:" + ex.Message + "')</script>");
                         }
-                    }
-
-                    else
-                    {
-                        Response.Write("<script>alert('内容重复！禁止导入');location='Course_List.aspx'</script></script> ");
-                        continue;
-                    }
+                  
                 }
                
              

@@ -120,6 +120,7 @@ public class Users_WebService : System.Web.Services.WebService
 
     }
 
+
     [WebMethod(EnableSession = true)]
     public string DelRole(string GUID)
     {
@@ -201,6 +202,7 @@ public class Users_WebService : System.Web.Services.WebService
         }
     }
 
+
     [WebMethod(EnableSession = true)]
     public string InitTeachers()
     {
@@ -222,12 +224,12 @@ on a.RoleGUID = b.GUID order by ID ASC");
     }
 
     [WebMethod(EnableSession = true)]
-    public string getUserInfo() {
+    public string getUserInfo(string GUID) {
         using (SqlConnection conn = new DB().GetConnection())
         {
             StringBuilder sb = new StringBuilder(@"select * from Teachers where GUID = @TeacherGUID");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
-            cmd.Parameters.AddWithValue("@TeacherGUID", Session["TeacherGUID"].ToString());
+            cmd.Parameters.AddWithValue("@TeacherGUID", GUID);
             conn.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();

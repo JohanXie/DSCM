@@ -46,7 +46,6 @@
                          <asp:Label ID="ErrorLabel" runat="server" Text="" Font-Bold="true" ForeColor="Red"></asp:Label>
                           <asp:CheckBox ID="CheckBox1" runat="server" AutoPostBack="true"
                            Text="查看密码" Visible="true"   oncheckedchanged="CheckBox1_CheckedChanged"/>  
-                          <input id="Hidden2" type="hidden" runat="server" />
                           <asp:Button ID="Psd_Upd" runat="server" class="btn btn-primary radius" Text="确认修改" OnClick="Psd_Upd_Click" />
 			        </div>
 		     </div>

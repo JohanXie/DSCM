@@ -80,7 +80,7 @@
                             <a @click="admin_start($event,item.GUID)" href="javascript:;" title="启用" style="text-decoration:none" v-if="!item.Valid">
                                 <i class="Hui-iconfont">&#xe615;</i>
                             </a>
-                            <a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" class="ml-5" style="text-decoration:none">
+                            <a title="编辑" :href="['User_Add.aspx?ID='+item.GUID]"  class="ml-5" style="text-decoration:none">
                                 <i class="Hui-iconfont">&#xe6df;</i>
                             </a> 
                             <a style="text-decoration:none" class="ml-5" onClick="change_password('修改密码','change-password.html','10001','600','270')" href="javascript:;" title="修改密码">
