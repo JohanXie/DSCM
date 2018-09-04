@@ -183,7 +183,7 @@ public class CL_WebService : System.Web.Services.WebService
             StringBuilder sb = new StringBuilder(@"select * from Courses ");
             if (Session["RoleGUID"].ToString() == teacherGUID) //老师
             {
-                sb.Append("where CoursesTeachers = @TeacherName");
+                sb.Append("where CoursesTeachers like  '%'+  @TeacherName + '%'");
             } else if (Session["RoleGUID"].ToString() == gradeDirector)//级主任
             {
                 sb.Append("where CourseGender like  '%'+ @Grade + '%'");

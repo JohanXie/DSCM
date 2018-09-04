@@ -7,11 +7,6 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课程管理 <span class="c-gray en">&gt;</span> 课程列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="page-container">
 
-         <div class="text-c"> 
-		    <input type="text" name="" id="" placeholder=" 输入课程名称、开课年级、指导老师" style="width:250px" class="input-text">
-		    <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜课程</button>
-	    </div>
-
         <div class="cl pd-5 bg-1 bk-gray mt-20"> 
             <span class="l">
                 <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
@@ -33,18 +28,19 @@
         </div>
 
         <div class="mt-20">
-		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="40"><input name="" type="checkbox" value=""></th>
 					<th width="80">名称</th>
 					<th width="100">课程类型</th>
-					<th>指导老师</th>
+					<th width="100">指导老师</th>
 					<th width="150">上课时间</th>
 					<th width="150">上课地点</th>
 					<th width="60">开班年级</th>
 					<th width="100">开班日期</th>
                     <th width="100">全校报名情况</th>
+                    <th width="100">特殊课程</th>
                     <th width="100">备注</th>
                     <th width="100">操作</th>
 				</tr>
@@ -66,6 +62,7 @@
                                   <i class="Hui-iconfont" style="color:#44708e;cursor:pointer;font-size:16px">&#xe695;</i>
                                </a>
 					        </td>
+                             <td>{{item.Typical}}</td>
                             <td>{{item.CourseNote}}</td>
                             <td class="td-manage">
                                <a style="text-decoration:none" :href="['/CM/EM/StudentCourseEvaluation.aspx?ID='+item.GUID]"  title="课程评价">
@@ -113,7 +110,23 @@
 
     </div>
 
-     <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+      <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+   <script type="text/javascript" src="../lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+   <script type="text/javascript" src="../lib/laypage/1.2/laypage.js"></script>
     <script src="../assets/js/CL/courseList.js"></script>
+     <script type="text/javascript">
+        $(function () {
+            $('.table-sort').dataTable({
+                "aaSorting": [[1, "desc"]],//默认第几个排序
+                "bStateSave": true,//状态保存
+                "aoColumnDefs": [
+                    //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                    //{ "orderable": false, "aTargets": [0, 8, 9] }// 制定列不参与排序
+                ]
+            });
+
+        });
+    </script>
+
 </asp:Content>
 

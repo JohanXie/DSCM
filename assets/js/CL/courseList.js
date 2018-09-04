@@ -30,15 +30,16 @@
         $.ajax({
             type: "get",
             url: "CL_WebService.asmx/InitCourses",
+            async: false,
             success: function (str) {
                 a = $(str).find("string").text();
                 var json = eval('(' + a + ')');
                 for (var i in json) {
                     if (json[i].CourseFirstStartDate) json[i].CourseFirstStartDate = formatDate(new Date(parseInt(json[i].CourseFirstStartDate.slice(6, 19))));
-                    if (json[i].CourseType) {
-                        //if (json[i].CourseType == "2") {
-                        //    json[i].CourseType = 'CCA课程';
-                        //}
+                    if (json[i].Typical) {
+                        json[i].Typical = "是";
+                    } else {
+                        json[i].Typical = "否";
                     };
                     if (parseInt(json[i].CourseLimitNum) == 0) {
                             json[i].CourseLimitNum = "不限";

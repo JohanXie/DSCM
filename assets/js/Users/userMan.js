@@ -1,5 +1,6 @@
 ﻿var userMan = new Vue({
     el: '.page-container',
+
     data: {
         totalCount: 200,//课程选课总学生数
 
@@ -10,6 +11,7 @@
         keepShow: true,
         userValid: true,
     },
+
     created: function () {
         var that = this;
         $.ajax({

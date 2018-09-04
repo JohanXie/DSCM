@@ -64,7 +64,7 @@ public class Stu_WebService : System.Web.Services.WebService
         {
             StringBuilder sb = new StringBuilder(@"select * from  Courses where 
 (select count(1) as num from Course_Students where Courses.GUID = Course_Students.CourseGUID and  Course_Students.StudentsID = @StudentGUID) = 0 
-and CourseGender like '%'+ @grade + '%' and CourseType = @CourseType  and CourseLimitNum > ChoosedStudentsNum or CourseLimitNum = 0 ");
+and CourseGender like '%'+ @grade + '%' and CourseType = @CourseType and Typical = 1  and CourseLimitNum > ChoosedStudentsNum or CourseLimitNum = 0 ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@StudentGUID", Session["StudentGUID"].ToString());
             cmd.Parameters.AddWithValue("@grade", Session["Grade"].ToString());
