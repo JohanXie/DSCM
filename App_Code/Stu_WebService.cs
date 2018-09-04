@@ -64,10 +64,11 @@ public class Stu_WebService : System.Web.Services.WebService
         {
             StringBuilder sb = new StringBuilder(@"select * from  Courses where 
 (select count(1) as num from Course_Students where Courses.GUID = Course_Students.CourseGUID and  Course_Students.StudentsID = @StudentGUID) = 0 
-and CourseGender like '%'+ @grade + '%'  and CourseLimitNum > ChoosedStudentsNum or CourseLimitNum = 0 ");
+and CourseGender like '%'+ @grade + '%' and CourseType = @CourseType  and CourseLimitNum > ChoosedStudentsNum or CourseLimitNum = 0 ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@StudentGUID", Session["StudentGUID"].ToString());
             cmd.Parameters.AddWithValue("@grade", Session["Grade"].ToString());
+            cmd.Parameters.AddWithValue("@CourseType", "拓展课");
             conn.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -98,5 +99,28 @@ and CourseGender like '%'+ @grade + '%'  and CourseLimitNum > ChoosedStudentsNum
             return Util.Dtb2Json(ds.Tables[0]);
         }
     }
+
+    [WebMethod(EnableSession = true)]
+    public string checkCourseDate() {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder(@"select a.CourseWeekDate
+from [dbo].[Courses] as a
+left join
+[dbo].[Course_Students] as b
+on a.GUID = b.CourseGUID
+WHERE b.StudentsID = @StudentGUID");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@StudentGUID", Session["StudentGUID"].ToString());
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            conn.Close();
+            return Util.Dtb2Json(ds.Tables[0]);
+        }
+    }
+
+
 
 }

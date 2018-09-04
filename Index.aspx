@@ -18,7 +18,7 @@
 					    <li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
 						    <ul class="dropDown-menu menu radius box-shadow">
 							    <li><a href="javascript:;" onclick="course_add('添加课程','CL/Course_add.aspx')"><i class="Hui-iconfont">&#xe616;</i> 课程</a></li>
-							    <li><a href="javascript:;" onclick="user_add('添加用户','Users/User_Add.aspx','','380')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
+							    <li><a href="javascript:;" data-toggle="modal" data-target="#addInfoModal"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
 					    </ul>
 				    </li>
 			      </ul>
@@ -145,6 +145,96 @@
             <li id="closeall">关闭全部 </li>
         </ul>
     </div>
+
+      <%--添加用户信息的Modal--%>
+      <div class="modal fade" id="addInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+           <div class="modal-dialog " role="document" style="width: 800px;">
+                <div class="modal-content" style="margin-top: 15%;">
+
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">添加用户</h4>
+                    </div>
+
+                     <div class="modal-body" style="padding: 25px 25px 0 25px;">
+                       <div class="form form-horizontal">
+
+                             <div class="row cl">
+			                    <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>用户名：</label>
+			                    <div class="formControls col-xs-8 col-sm-9">
+				                    <input type="text" class="input-text" id="userName">
+			                    </div>
+		                     </div>
+
+                           
+                              <div class="row cl">
+			                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>密码：</label>
+			                            <div class="formControls col-xs-8 col-sm-9">
+				                            <input type="password" class="input-text" id="password">
+			                            </div>
+		                     </div>
+
+
+                            <div class="row cl">
+                                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属班级：</label>
+
+                                 <div class="formControls col-xs-8 col-sm-9">
+                                       <select  v-model="gradeSelected" id="gradeSelected" >
+                                                <option value="-1">年级</option>
+                                                <option value="初一">初一</option>
+                                                <option value="初二">初二</option>
+                                               <option value="初二">初三</option>
+                                        </select>
+
+                                       <select id="sub" v-model="classSelected" class="form-control" v-if="has">
+                                                   <option value="-1">班级</option>
+                                                   <option v-for="item in classItems" v-bind:value="item.Class">{{item.Class}}</option>
+                                        </select>
+                                 </div>
+
+                        </div>
+
+                        
+                            <div class="row cl">
+                                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否班主任：</label>
+                                   <div class="formControls col-xs-8 col-sm-9">
+                    
+                                           <input  name="HeadTeacher"   v-bind:value="1" type="radio"   class="colored-blue">
+                                            <span>是</span>
+
+                                            <input  name="HeadTeacher"   v-bind:value="0" type="radio"  class="colored-blue">
+                                            <span>否</span>
+                 
+                                    </div>
+                            </div>
+
+                             <div  class="row cl">
+                                      <label class="form-label col-xs-4 col-sm-2"><span class ="text-primary">角色：</span></label>
+                              <div class="formControls col-xs-8 col-sm-9">
+                                      <label class ="radio-inline"  v-for="item2 in  roleList" >
+                                       <input  name="Roles"  v-bind:id="item2.GUID" v-bind:value="item2.GUID"  type="radio" class="colored-blue">
+                                        <span>{{item2.RoleName}}</span>
+                                     </label>
+                                </div>
+                        </div>
+
+                               <br />
+
+                    </div>
+                </div>
+
+                      <div class="modal-footer">
+                          <input  type="button"   style="margin: 0 5px" class ="btn btn-info"  value="保存" @click="addUser">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+
+
+            </div>
+      </div>
+          </div>
+
+       <%--添加用户信息的Modal--%>
+
 
     <%--展现用户信息的Modal--%>
         <div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -65,8 +65,16 @@
 			        <option value="2">已选课程</option>
 		        </select>
 		    </span>--%>
-		    <input type="text" class="input-text" style="width:250px" placeholder="输入课程名称、开课年级、指导老师" id="" name="">
+		    <input type="text" class="input-text" style="width:250px" placeholder="输入课程名称、开课年级、指导老师" @input="searchCourse" list="words">
+               <datalist id="words">
+                                   <option v-for="item in searchlist" :value="item"></option>
+               </datalist> 
 		    <button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜课程</button>
+            <br />
+            <br />
+                <p style="color:red;font-size:18px;">
+                     可以选择两门拓展课，两门拓展课上课时间不能冲突同时不能够和CCA课时间冲突
+                 </p>
 	   </div>
 
          <div class="mt-20">
@@ -94,7 +102,7 @@
                                         <td class="td-status">{{item.CourseFirstStartDate}}</td>
                                         <td>{{item.CourseGender}}</td>
                                         <td>
-                                             <input class="btn btn-success radius" type="button" @click="applyCourse(item.GUID)" value="立即报名"/>
+                                             <input class="btn btn-success radius" type="button" @click="applyCourse(item.GUID,item.CourseWeekDate)" value="立即报名"/>
                                           <%--   <span class="label label-success radius" v-show="!ifsign">已报名</span>--%>
                                         </td>
                                     </tr>
@@ -104,7 +112,7 @@
 
              <br />  <br />  <br />
 
-               <table class="table table-border table-bordered table-bg table-hover table-sort">
+               <table class="table table-border table-bordered table-bg table-hover table-sort"  v-show="!ifsign">
 			        <thead>
 				        <tr class="text-c">
 					        <th width="80">课程名</th>
